@@ -1,0 +1,30 @@
+db.Grades.aggregate([{
+    $group: {
+        _id: "$GradeType",
+        AvgTotal: { $avg: "$Score"}
+    }
+}]);
+
+db.Grades.aggregate([
+{
+    $project: {
+        StudentId: 1,
+        SubjectId: 1,
+        Score: 1,
+        Pass: {
+            $gt: ["$Score", 18]
+        }
+    }
+}]);
+
+db.Parents.aggregate([{
+    $project: {
+        "FirstName": 1 ,
+        "LastName": 1,
+        "Children": { $size: "$StudentIds" }
+    }
+}]);
+
+db.Parents.aggregate([{
+    $project: { "FirstName": 1 , "LastName": 1, "Children": {$size: "$StudentIds"} }
+}])

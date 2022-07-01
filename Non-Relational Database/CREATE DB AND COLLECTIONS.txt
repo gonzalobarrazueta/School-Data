@@ -1,0 +1,223 @@
+use school_data;
+
+db.createCollection("Students", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            description: "Document describing a student's basic data.",
+            required: ["FirstName", "LastName", "DNI", "ClassId", "ParentId"],
+            properties: {
+                "FirstName": {
+                    bsonType: "string",
+                    description: "The name of a student.",
+                },
+                "MiddleName": {
+                    bsonType: "string",
+                    description: "Second name of a student. (Optional)."
+                },
+                "LastName": {
+                    bsonType: "string",
+                    description: "The lastname of a student."
+                },
+                "DNI": {
+                    bsonType: "string",
+                    description: "The National ID Card of a student."
+                },
+                "ClassId": {
+                    bsonType: "objectId",
+                    description: "The id of a unique document in the Class collection."
+                },
+                "ParentId": {
+                    bsonType: "objectId",
+                    description: "The id of a unique document in the Parents collection."
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("Parents", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            description: "Document describing a student's parent data",
+            required: ["FirstName", "LastName", "Email", "Username", "DNI", "StudentIds"],
+            properties: {
+                "FirstName": {
+                    bsonType: "string",
+                    description: "The name of a student's parent.",
+                },
+                "MiddleName": {
+                    bsonType: "string",
+                    description: "Second name of a student's parent. (Optional)."
+                },
+                "LastName": {
+                    bsonType: "string",
+                    description: "The lastname of a student's parent."
+                },
+                "Email": {
+                    bsonType: "string",
+                    pattern: "@gmail\.com$",
+                    description: "Email of a parent."
+                },
+                "Username": {
+                    bsonType: "string",
+                    description: "The username definied by a parent."
+                },
+                "DNI": {
+                    bsonType: "string",
+                    description: "The National ID Card of a student's parent."
+                },
+                "StudentIds": {
+                    bsonType: "array",
+                    description: "List of the unique identifiers of the students who are the children of the parent logged in.",
+                    minItems: 1,
+                    uniqueItems: true,
+                    items: {
+                        bsonType: "objectId",
+                        description: "The id of a unique document in the Students collection."
+                    }
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("Class", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            description: "Document describing a student's class name.",
+            required: ["ClassName", "SubjectIds"],
+            properties: {
+                "ClassName": {
+                    bsonType: "string",
+                    description: "The name of the classroom."
+                },
+                "SubjectIds": {
+                    bsonType: "array",
+                    description: "List of the identifiers for the subjects that the class has to take during the year.",
+                    minItems: 1,
+                    uniqueItems: true,
+                    items: {
+                        bsonType: "objectId",
+                        description: "The id of a unique document in the Subjects collection."
+                    }
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("Subjects", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            description: "Document describing a classroom's subjects.",
+            required: ["SubjectName"],
+            properties: {
+                "SubjectName": {
+                    bsonType: "string",
+                    description: "The name of the subject."
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("Grades", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            description: "Document describing a student's grades.",
+            required: ["StudentId", "SubjectId", "Score", "GradeType"],
+            properties: {
+                "StudentId": {
+                    bsonType: "objectId",
+                    description: "The unique identifier of a student."
+                },
+                "SubjectId": {
+                    bsonType: "objectId",
+                    description: "The unique identifier of a subject."
+                },
+                "Score": {
+                    bsonType: ["double", "int"],
+                    description: "The score of a graded assignment.",
+                    minimum: 0,
+                    maximum: 20,
+                },
+                "GradeType": {
+                    enum: ["Práctica Calificada", "Examen Mensual", "Examen Bimestral", "Cuestionario"],
+                    description: "The name of the graded assignment"
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("Teachers", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            description: "Document describing a teacher's data.",
+            required: ["FirstName", "LastName", "Email", "SubjectIds"],
+            properties: {
+                "FirstName": {
+                    bsonType: "string",
+                    description: "The name of a teacher.",
+                },
+                "MiddleName": {
+                    bsonType: "string",
+                    description: "Second name of a teacher. (Optional)."
+                },
+                "LastName": {
+                    bsonType: "string",
+                    description: "The lastname of a teacher."
+                },
+                "Email": {
+                    bsonType: "string",
+                    pattern: "@gmail\.com$",
+                    description: "Email of a teacher."
+                },
+                "SubjectIds": {
+                    bsonType: "array",
+                    description: "List of identifiers of the subjects that the teacher teaches.",
+                    minItems: 1,
+                    uniqueItems: true,
+                    items: {
+                        bsonType: "objectId",
+                        description: "The id of a unique document in the Subjects collection."
+                    }
+                }
+            }
+        }
+    }
+});
+
+db.createCollection("Schedules", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            description: "Document describing a classroom's schedule.",
+            required: ["StartTime", "EndTime", "ClassId"],
+            properties: {
+                "StartTime": {
+                    bsonType: "int",
+                    description: "The time classes start.",
+                    minimum: 6,
+                    maximum: 18
+                },
+                "EndTime": {
+                    bsonType: "int",
+                    description: "The time classes finish.",
+                    minimum: 6,
+                    maximum: 18
+                },
+                "ClassId": {
+                    bsonType: "objectId",
+                    description: "The id of a unique document in the Class collection."
+                }
+            }
+        }
+    }
+});
