@@ -1,0 +1,35 @@
+1.	Como usuario quiero obtener toda mi información brindada
+ a la plataforma, para que de esa manera pueda confirmar que mis
+ datos no son erróneos y sean válidos, caso contrario poder 
+actualizarlos y corregirlos de forma eficaz para no tener ningún inconveniente.
+
+db.Parents.find( {DNI:"34510278",FirstName: 
+
+"Joshua", LastName: "Silva", Email:
+
+"josh-contact@gmail.com"})
+
+
+
+2.	Como padre quiero saber las notas mayores o iguales a 20 de los mejores
+ alumnos de clase, mostrando su código de identificación, para poder ver si
+ mi hijo está en los primeros puestos. Asimismo, tomar medidas al respecto
+ con respecto a los resultados obtenidos.
+
+db.Grades.find({"Score":{$gte:18}},
+
+{GradeType:18,Score:18,
+
+SubjectId:18});
+
+
+3.	Como padre quiero saber la hora de salida de las clases de mi hijo
+ que terminan después de las 9 de la noche, para mantenerme informado a 
+que hora llegara a la casa mi hijo matriculado en la institución educativa
+ correspondiente.
+
+db.Schedules.find({"StartTime":{$gte:9}}
+
+ ,{ClassId:9,EndTime:9,
+
+StartTime:9});
