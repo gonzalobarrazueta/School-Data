@@ -1,0 +1,11 @@
+El primer querie sirve para que los padres de familia puedan revisar cuales son los cursos donde su hijo(a) les está yendo de manera eficaz, y de esta forma poder saber cuáles son sus cursos fuertes.
+
+db.Grades.find({"Score":{$gte:15}},{GradeType:15,Score:15,SubjectId:15}, SubjectName = “Matemáticas”);
+
+El segundo querie ayudara al padre de familia poder visualizar en que curso su hijo se encuentra bajo de notas y asi poder encontrar una solución con la cual pueda ayudarlo a mejorar.
+
+db.Grades.find({"Score":{$lt:14}},{GradeType:14,Score:14,SubjectId:14}, SubjectName = “Matemáticas”);
+
+El tercer querie sirve para conocer la cantidad de alumnos donde su hijo se encuentra y saber la magnitud y si su hijo esta llevando una buena sesión de clases cada semana. 
+
+db.Student.Find(ClassId=4, SubjectName = "Ciencias")
