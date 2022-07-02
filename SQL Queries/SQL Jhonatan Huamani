@@ -1,0 +1,47 @@
+La primera query te permite mostrar los datos del estudiante con respecto
+a un DNI proporcionado por el padre de familia que desea saber si su hijo
+obtuvo una nota mayor a 19 para ver el desempeño de su hijo.
+
+select  FirstName, DNI, Score, SubjectName from student s 
+JOIN Grades g on g.GradesId = s.StudentId
+Join Subject sb on sb.SubjectId=s.StudentId
+WHERE DNI='98267612' and Score >19;
+Group by g.GradeName, sb.SubjectId;
+
+===============================================
+
+La segunda query mostrar a todos los compañeros de tu hijo 
+ que obtuvieron calificacione superiores a 10, para comprobar 
+si el nivel de tu hijo va al concorde de sus demas compañeros 
+y asi tomar medidas al respecto
+
+
+select  FirstName, DNI, ClassID, Score, SubjectName from student s 
+JOIN Grades g on g.GradesId = s.StudentId
+Join Subject sb on sb.SubjectId=s.StudentId
+WHERE Score >10;
+Group by FirstName, DNI;
+
+================================================
+La tercera query te permite mostrar a aun alumno determinado con
+ su DNI donde podras observar la nota que saco con respecto al 
+curso de matematicas, de manera que el padre pueda saber si 
+aprobo el curso presentado.
+
+select  DNI, ClassID, Score, SubjectName from student s 
+JOIN Grades g on g.GradesId = s.StudentId
+Join Subject sb on sb.SubjectId=s.StudentId
+WHERE SubjectName='Matemáticas' and DNI='72320318';
+Group by FirstName, DNI;
+================================================
+
+La cuarta query te permite mostrar a un cierto alumno con DNI identificado,
+ de forma eficiente.Asimismo, buscarlo por el nombre de manera que
+ la busqueda sea mas rapida y saber la nota que tiene con respecto
+ a un curso presentado.
+
+select  FirstName, DNI, ClassID, Score, SubjectName from student s 
+JOIN Grades g on g.GradesId = s.StudentId
+Join Subject sb on sb.SubjectId=s.StudentId
+WHERE DNI='87651341' and FirstName='Luis';
+Group by Score, DNI;
