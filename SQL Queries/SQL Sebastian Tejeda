@@ -1,0 +1,47 @@
+
+//para que los padres de familia puedan revisar cuales son los cursos donde su hijo(a) les está yendo de manera eficaz
+
+Select Score, SubjectName from student st
+Join Subject sub on sub.SubjectId = st.StudentId
+Join Grades g on g.GradesId = st.StudentId
+Where score>15;
+Group by sub.SubjectId, g. GradesId
+
+
+
+
+//para que los padres de familia puedan revisar cuales son los cursos donde su hijo(a) están bajos y necesitan refuerzo
+
+Select Score, SubjectName from student st
+Join Subject sub on sub.SubjectId = st.StudentId
+Join Grades g on g.GradesId = st.StudentId
+Where score<15;
+Group by sub.SubjectId, g. GradesId 
+
+
+
+
+//Cuando un padre de familia desea saber cuáles son los alumnos con mejores notas dentro del curso de Ciencias
+
+select DNI, Score, SubjectName from student st
+JOIN Grades g on g.GradesId = st.StudentId
+Join Subject sb on sb.SubjectId=st.StudentId
+Where score>18 and SubjectName = “Ciencias”;
+Group by g.GradesId, sb.DubjectId
+
+
+
+
+//Si el padre de familia desea revisar que alumnus se encuentran en la misma clase de su hijo
+
+
+select DNI, StudentId from student st
+JOIN Grades g on g.GradesId = st.StudentId
+Join Subject sb on sb.SubjectId=st.StudentId
+Where ClassId = 4;
+Group by g.GradesId, sb.DubjectId
+
+
+
+
+
