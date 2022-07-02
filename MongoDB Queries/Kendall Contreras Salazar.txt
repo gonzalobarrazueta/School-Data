@@ -1,0 +1,26 @@
+1- Conocer los cursos que dicta cada profesor para que los padres sepan quién será el que le dicte la clase a sus hijos
+db.Teachers.aggregate([{
+	$project: {
+		"FirstName": 1,
+		"LastName":1,
+		"SubjectIds": 1
+	}
+}])
+
+2- Conocer cuantos cursos dicta cada profesor para darle facilidades
+db.Teachers.aggregate([{
+	$project: {
+		"FirstName": 1,
+		"LastName":1,
+		"N° Subjects": {$size: "$SubjectIds"}
+	}
+}])
+
+3- Conocer la cantidad de cursos de cada clase para conocer cuál es la clase más pesada con mayor cantidad.
+db.Class.aggregate([{
+	$project: {
+		"ClassName": 1,
+		"Cursos": {$size: "$SubjectIds"}
+	}
+}])
+
